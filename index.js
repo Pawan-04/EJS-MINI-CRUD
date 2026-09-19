@@ -34,6 +34,25 @@ app.get(`/file/:fileName`,(req,res)=>{
 
 })
 
+//Edit task
+app.get('/file/edit/:fileName',(req,res)=>{
+    let fileName = req.params.fileName
+    fs.readFile(`./files/${fileName}`,'utf-8',(err,data)=>{
+        console.log(data)
+        res.render('edit',{fileName:fileName,data:data})
+    })
+
+})  
+
+//Edit approved
+app.post(`/edit/:fileName`,(req,res)=>{
+    const fileName = req.params.fileName
+    fs.writeFile(`./files/${fileName}`,req.body.details,(err)=>{
+            res.redirect('/')
+    })
+ 
+})
+
 
 app.listen(3000,()=>{
     console.log("running server at 3000")
